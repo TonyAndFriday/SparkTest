@@ -8,6 +8,7 @@ import org.apache.spark.streaming.{Seconds, StreamingContext}
 /**
   * Created by tony on 2018/4/25.
   * 自定义kafkaManager，将Offset信息保存到zookeeper,失败重启后也能继续消费
+  * test
   *
   */
 object KafkaTest {
