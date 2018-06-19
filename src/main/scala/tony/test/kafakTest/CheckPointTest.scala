@@ -23,7 +23,7 @@ object CheckPointTest {
 
   val create = () => { //失败重启后会多消费一个批次
     val conf = new SparkConf().setAppName("MyWordCount").setMaster("local[2]").set("spark.streaming.kafka.maxRatePerPartition", "1")
-    val ssc = new StreamingContext(conf,Seconds(3))
+    val ssc = new StreamingContext(conf,Seconds(1))
     ssc.checkpoint("d:\\checkPoint")
     val topic = Set("test")
     val kafkaParams = Map[String,String](
@@ -33,6 +33,7 @@ object CheckPointTest {
     )
 
     val kafkaStream = KafkaUtils.createDirectStream[String, String, StringDecoder, StringDecoder](ssc,kafkaParams,topic)
+    kafkaStream.checkpoint(Seconds(5))
     kafkaStream.print()
     ssc
   }
